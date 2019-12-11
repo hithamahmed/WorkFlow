@@ -1,0 +1,83 @@
+﻿@page
+@model WFlow.Web.UI.Pages.RequestsModel
+@{
+    ViewData["Title"] = "requests";
+    var cntlname = ViewContext.RouteData.Values["Page"].ToString();
+}
+<div>
+    <h1>Requests</h1>
+    <button type="button" onclick="AddEditForm(0,'@cntlname','AddEdit','id')" class="btn btn-sm btn-warning ">New</button>
+    <p>@Html.ValidationSummary(false)</p>
+    <table class="table table-hover table-borderless table-striped">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Request Type</td>
+                <td>Head Of Flow</td>
+                <td>Status</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.FlowRequests)
+            {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.WorkFlow.Name</td>
+                <td>@item.WorkFlow.Department.UserHead.Name</td>
+                <td>
+                    @if (item.IsClosed)
+                    {
+                        <h6 class="text-success">Closed</h6>
+                    }
+                    else
+                    {
+                        if (item.IsNewRequest)
+                        {
+                            <h6 class="text-info">New</h6>
+                        }
+                        else
+                        {
+                            <h6 class="text-warning">Pending</h6>
+                        }
+
+                    }
+
+                </td>
+                <td>
+                    @{
+                        var actions = item.RequestActions
+                        .Where(x => x.Id == item.CurrentFlowRequestActionId.Value).ToList();
+                    }
+                    @if (actions.Where(x => x.RequestStatus.Equals(Enums.FlowAction.Accept.ToString())).Count() > 0)
+                    {
+                        <h6 class="text-success">Accepted</h6>
+                    }
+                    else if (actions.Where(x => x.RequestStatus.Equals(Enums.FlowAction.Reject.ToString())).Count() > 0)
+                    {
+                        <h6 class="text-danger">Rejected</h6>
+                    }
+                    else
+                    {
+                        <h6 class="text-info">In Progress</h6>
+                    }
+                </td>
+                <td>
+                    @if (item.IsNewRequest)
+                    {
+                        <div class="btn-group " role="group">
+                            <button type="button" onclick="AddEditForm(@item.Id,'@cntlname','AddEdit','id')" class="btn btn-sm btn-warning ">edit</button>
+                        </div>
+                    }
+
+                </td>
+            </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+</div>
+

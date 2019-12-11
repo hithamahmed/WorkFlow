@@ -1,0 +1,41 @@
+﻿@page
+@model WFlow.Web.UI.Pages.FlowsModel
+@{
+    ViewData["Title"] = "Users";
+    var cntlname = ViewContext.RouteData.Values["Page"].ToString();
+
+}
+<div>
+    <h1>WorkFlow</h1>
+    <button type="button" onclick="AddEditForm(0,'@cntlname','AddEdit','id')" class="btn btn-sm btn-warning ">New</button>
+    <p>@Html.ValidationSummary(false)</p>
+    <table class="table table-hover table-borderless table-striped">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Details</td>
+                <td>Department In Charge</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.flows)
+            {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Details</td>
+                <td>@item.Department.Name</td>
+                <td>
+                    <div class="btn-group " role="group">
+                        <button type="button" onclick="AddEditForm(@item.Id,'@cntlname','AddEdit','id')" class="btn btn-sm btn-warning ">edit</button>|
+                    </div>
+                </td>
+            </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+</div>

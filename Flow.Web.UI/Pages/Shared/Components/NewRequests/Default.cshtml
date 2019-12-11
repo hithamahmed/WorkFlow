@@ -1,0 +1,40 @@
+﻿
+@model ICollection<AppWorkFlow.Data.Entity.FlowRequestAction>
+@{ 
+      var cntlname = ViewContext.RouteData.Values["Page"].ToString();
+}
+    <table class="table table-hover  table-bordered">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Request Type</td>
+                <td>Head Of Flow</td>
+                <td>Status</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FlowRequest.Name</td>
+                    <td>@item.FlowRequest.WorkFlow.Name</td>
+                    <td>@item.FlowRequest.WorkFlow.Department.UserHead.Name</td>
+                    <td>@item.RequestStatus</td>
+                    <td>
+                        @if (item.RequestStatus.Equals(Enums.FlowAction.Redirect.ToString()) 
+                            || item.RequestStatus.Equals("New"))
+                        {
+                            <div class="btn-group " role="group">
+                                <button type="button" onclick="SubmitAction('@item.Id','@cntlname','SubmitAction','id','&frid='+ @item.FlowRequestId)" class="btn btn-sm btn-warning ">Take Action</button>
+                            </div>
+                        }
+
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>

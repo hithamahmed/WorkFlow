@@ -1,0 +1,104 @@
+﻿@page
+@model Flow.Web.UI.Pages.UsersModel
+@{
+    ViewData["Title"] = "Users";
+    var cntlname = ViewContext.RouteData.Values["Page"].ToString();
+
+}
+    
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header alert-success" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseuser" aria-expanded="true" aria-controls="collapseuser">
+                        Users
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseuser" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div>
+                         
+                        <button type="button" onclick="AddEditForm(0,'@cntlname','AddEditUser','userid')" class="btn btn-sm btn-warning ">New</button>
+                        <p>@Html.ValidationSummary(false)</p>
+                        <table class="table table-hover table-borderless table-striped">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Title</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.Users)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.Title</td>
+                                        <td>
+                                            <div class="btn-group " role="group">
+                                                <button type="button" onclick="AddEditForm(@item.Id,'@cntlname','AddEditUser','userid')" class="btn btn-sm btn-warning ">edit</button>|
+                                                <form method="post"><button type="submit" asp-page-handler="RemoveUser" asp-route-userid="@item.Id" class="btn btn-sm btn-danger">Remove</button></form>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header alert-warning" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFlow" aria-expanded="true" aria-controls="collapseFlow">
+                        Departments
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFlow" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div>
+                      
+                        <button type="button" onclick="AddEditForm(0,'@cntlname','AddEditDepartment','id')" class="btn btn-sm btn-warning ">New</button>
+                        <p>@Html.ValidationSummary(false)</p>
+                        <table class="table table-hover table-borderless table-striped">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Title</td>
+                                    <td>Head</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.Departments)
+                                {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.UserHead.Name</td>
+                                    <td>
+                                        <div class="btn-group " role="group">
+                                            <button type="button" onclick="AddEditForm(@item.Id,'@cntlname','AddEditDepartment','id')" class="btn btn-sm btn-warning ">edit</button>|
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

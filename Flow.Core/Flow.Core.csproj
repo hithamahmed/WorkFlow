@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>WFlow.Core</RootNamespace>
+    <AssemblyName>WFlow.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppWorkFlow.Data\AppWorkFlow.Data.csproj" />
+  </ItemGroup>
+
+</Project>

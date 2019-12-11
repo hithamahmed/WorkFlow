@@ -1,0 +1,37 @@
+﻿@page
+@model WFlow.Web.UI.Pages.DepartmentRequestsModel
+@{
+    ViewData["Title"] = "DepartmentRequests";
+    var cntlname = ViewContext.RouteData.Values["Page"].ToString();
+
+}
+
+<h1>Manage Requests</h1>
+<div>
+
+    <p>@Html.ValidationSummary(false)</p>
+    <table class="table  table-borderless ">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Title</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Title</td>
+                    <td>
+                        @await Component.InvokeAsync("NewRequests", new { userid = @item.Id })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>
