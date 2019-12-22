@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppWorkFlow.Core;
+﻿using AppWorkFlow.Core;
 using AppWorkFlow.Data;
 using AppWorkFlow.Data.Entity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WFlow.Core.Interface;
 namespace WFlow.Core.Repositories
 {
@@ -25,7 +24,7 @@ namespace WFlow.Core.Repositories
                         .Include(x => x.WorkFlow)
                     .ThenInclude(x => x.Department)
                     .ThenInclude(x => x.UserHead)
-                    .Where(x=> x.WorkFlow.Department.UserHead.Id== userid)
+                    .Where(x => x.WorkFlow.Department.UserHead.Id == userid)
                     .ToListAsync();
             }
             catch (Exception)
@@ -41,12 +40,12 @@ namespace WFlow.Core.Repositories
                 return await _db.FlowRequestActions
                     //.Include(x=>x.Department)
                     .Include(x => x.FlowRequest)
-                    .ThenInclude(x=>x.WorkFlow)
+                    .ThenInclude(x => x.WorkFlow)
                     .ThenInclude(x => x.Department)
                     .ThenInclude(x => x.UserHead)
-                    .Where(x => 
-                    !x.FlowRequest.IsClosed 
-                    && x.Department.UserHead.Id == userid 
+                    .Where(x =>
+                    !x.FlowRequest.IsClosed
+                    && x.Department.UserHead.Id == userid
                     && x.FlowRequest.CurrentFlowRequestActionId == x.Id)
                     .ToListAsync();
             }
@@ -69,7 +68,9 @@ namespace WFlow.Core.Repositories
                 flowrequest.CurrentFlowRequestActionId = flowRequestAction.Id;
 
                 if (!flowRequestAction.RequestStatus.Equals(Enums.FlowAction.Redirect.ToString()))
+                {
                     flowrequest.IsClosed = true;
+                }
 
                 return await _db.SaveChangesAsync();
 

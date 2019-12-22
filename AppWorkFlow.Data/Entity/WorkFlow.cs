@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppWorkFlow.Data.Entity
 {
-    
-    public class WorkFlow: Entitybase
+
+    public class WorkFlow : Entitybase
     {
         //define flow like request vacations, payslip, leave
 
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        
+
         [MaxLength(100)]
         public string Details { get; set; }
 

@@ -1,8 +1,6 @@
 ﻿using AppWorkFlow.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,9 +8,9 @@ namespace AppWorkFlow.Data
 {
     public class FlowContext : DbContext
     {
-        public DbSet<User>  Users { get; set; }
-        public DbSet<Department>  Departments{ get; set; }
-        public DbSet<WorkFlow> WorkFlows{ get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<WorkFlow> WorkFlows { get; set; }
         public DbSet<FlowRequest> FlowRequests { get; set; }
         public DbSet<FlowRequestAction> FlowRequestActions { get; set; }
 
@@ -36,7 +34,7 @@ namespace AppWorkFlow.Data
         {
             try
             {
-                if (true) 
+                if (true)
                 {
                     var entries = ChangeTracker.Entries();
                     foreach (var entry in entries)

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppWorkFlow.Data;
+﻿using AppWorkFlow.Data;
 using AppWorkFlow.Data.Entity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WFlow.Core.Interface;
 
 namespace WFlow.Core.Repositories
@@ -22,9 +21,13 @@ namespace WFlow.Core.Repositories
             try
             {
                 if (t.Id == 0)
+                {
                     _db.WorkFlows.Add(t);
+                }
                 else
+                {
                     _db.Update(t);
+                }
 
                 return await _db.SaveChangesAsync();
             }
@@ -53,7 +56,7 @@ namespace WFlow.Core.Repositories
         {
             try
             {
-                return await _db.WorkFlows.Include(x=>x.Department)//.Include(x=>x.Actions)
+                return await _db.WorkFlows.Include(x => x.Department)//.Include(x=>x.Actions)
                     .ToListAsync();
             }
             catch (Exception)
@@ -72,7 +75,7 @@ namespace WFlow.Core.Repositories
                     .Include(x => x.WorkFlow)
                     .ThenInclude(x => x.Department)
                     .ThenInclude(x => x.UserHead)
-                    .OrderByDescending(x=>x.Id)
+                    .OrderByDescending(x => x.Id)
                     .ToListAsync();
             }
             catch (Exception)
@@ -99,14 +102,16 @@ namespace WFlow.Core.Repositories
                 if (FR > 0)
                 {
                     var flowrequest = _db.FlowRequests
-                        .Include(x=>x.WorkFlow)
-                        .ThenInclude(x=>x.Department).Where(x=>x.Id == t.Id).SingleOrDefault();
-                    FlowRequestAction flowRequestAction = new FlowRequestAction();
-                    flowRequestAction.ActionDate = DateTime.UtcNow.AddHours(3);
-                    flowRequestAction.RequestStatus = "New";
-                    flowRequestAction.FlowRequestId = flowrequest.Id;
-                    flowRequestAction.RedirectToDepartmentId = flowrequest.WorkFlow.Department.Id;
-                                        
+                        .Include(x => x.WorkFlow)
+                        .ThenInclude(x => x.Department).Where(x => x.Id == t.Id).SingleOrDefault();
+                    FlowRequestAction flowRequestAction = new FlowRequestAction
+                    {
+                        ActionDate = DateTime.UtcNow.AddHours(3),
+                        RequestStatus = "New",
+                        FlowRequestId = flowrequest.Id,
+                        RedirectToDepartmentId = flowrequest.WorkFlow.Department.Id
+                    };
+
                     _db.FlowRequestActions.Add(flowRequestAction);
                     await _db.SaveChangesAsync();
 

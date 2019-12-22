@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace AppWorkFlow.Data.Entity
 {
@@ -12,7 +10,7 @@ namespace AppWorkFlow.Data.Entity
         public int FlowRequestId { get; set; }
 
         public DateTime ActionDate { get; set; }
-        
+
         [ForeignKey("FlowRequestId")]
         public FlowRequest FlowRequest { get; set; }
         [MaxLength(10)]

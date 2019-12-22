@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppWorkFlow.Data.Entity;
-using WFlow.Core.Interface;
+﻿using AppWorkFlow.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WFlow.Core.Interface;
 
 namespace WFlow.Web.UI.Pages
 {
@@ -14,7 +13,7 @@ namespace WFlow.Web.UI.Pages
         private readonly IFlow _service;
         private readonly IUsers _gservice;
         public ICollection<WorkFlow> flows { get; set; }
-        
+
         public FlowsModel(IFlow service,
             IUsers gservice)
         {
@@ -40,11 +39,13 @@ namespace WFlow.Web.UI.Pages
             try
             {
 
-               WorkFlow flow = new WorkFlow();
+                WorkFlow flow = new WorkFlow();
                 var depts = await _gservice.GetDepartmentsList();
                 flow.DepartmentIEnumerable = depts;
                 if (id == 0)
+                {
                     return Partial("_AddEditFlow", flow);
+                }
 
                 flow = await _service.GetSingleFlow(id);
                 flow.DepartmentIEnumerable = depts;
@@ -62,7 +63,9 @@ namespace WFlow.Web.UI.Pages
             try
             {
                 if (!ModelState.IsValid)
+                {
                     return RedirectToPage();
+                }
 
                 int i = await _service.AddEditFlow(flow);
                 return RedirectToPage();
@@ -74,6 +77,6 @@ namespace WFlow.Web.UI.Pages
             }
 
         }
-     
+
     }
 }

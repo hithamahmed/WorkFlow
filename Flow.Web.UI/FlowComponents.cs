@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WFlow.Core.Interface;
 
 namespace WFlow.Web.UI
 {
     [ViewComponent(Name = "NewRequests")]
-    public class FlowComponents: ViewComponent
+    public class FlowComponents : ViewComponent
     {
         private readonly IFlowRequests _repost;
 
@@ -25,5 +22,5 @@ namespace WFlow.Web.UI
             return View(_List);
         }
     }
- 
+
 }

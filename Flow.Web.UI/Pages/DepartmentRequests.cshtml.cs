@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppWorkFlow.Core;
+﻿using AppWorkFlow.Core;
 using AppWorkFlow.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WFlow.Core.DTO;
 using WFlow.Core.Interface;
 
@@ -42,14 +41,16 @@ namespace WFlow.Web.UI.Pages
 
         }
 
-        public async Task<IActionResult> OnGetSubmitActionAsync(int id,int frid)
+        public async Task<IActionResult> OnGetSubmitActionAsync(int id, int frid)
         {
             try
             {
-                RequestActionDTO flowRequestAction = new RequestActionDTO();
-                flowRequestAction.Id = id;
-                flowRequestAction.FlowRequestId = frid;
-                flowRequestAction.DepartmentEnumerable = await usersService.GetDepartmentsList();
+                RequestActionDTO flowRequestAction = new RequestActionDTO
+                {
+                    Id = id,
+                    FlowRequestId = frid,
+                    DepartmentEnumerable = await usersService.GetDepartmentsList()
+                };
 
                 return Partial("_SetRequestAction", flowRequestAction);
             }
@@ -65,14 +66,21 @@ namespace WFlow.Web.UI.Pages
             try
             {
                 if (!ModelState.IsValid)
+                {
                     return RedirectToPage();
-                FlowRequestAction flowRequestAction = new FlowRequestAction();
-                flowRequestAction.RequestStatus = flowRequestActionDto.RequestStatus;
-                flowRequestAction.FlowRequestId = flowRequestActionDto.FlowRequestId;
+                }
+
+                FlowRequestAction flowRequestAction = new FlowRequestAction
+                {
+                    RequestStatus = flowRequestActionDto.RequestStatus,
+                    FlowRequestId = flowRequestActionDto.FlowRequestId
+                };
                 var actionstatus = (Enums.FlowAction)int.Parse(flowRequestActionDto.RequestStatus);
                 if (actionstatus.ToString().Equals(Enums.FlowAction.Redirect.ToString()))
+                {
                     flowRequestAction.RedirectToDepartmentId = flowRequestActionDto.RedirectToDepartmentId;
-                 
+                }
+
                 flowRequestAction.ActionDate = DateTime.UtcNow.AddHours(3);
 
 

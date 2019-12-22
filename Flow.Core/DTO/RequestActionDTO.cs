@@ -1,7 +1,5 @@
 ﻿using AppWorkFlow.Data.Entity;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace WFlow.Core.DTO
 {

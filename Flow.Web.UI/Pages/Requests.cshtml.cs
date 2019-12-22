@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppWorkFlow.Data.Entity;
+﻿using AppWorkFlow.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WFlow.Core.Interface;
 
 namespace WFlow.Web.UI.Pages
@@ -47,7 +46,9 @@ namespace WFlow.Web.UI.Pages
                 flowrequests.RequestDate = DateTime.UtcNow.AddHours(3);
                 flowrequests.IsNewRequest = true;
                 if (id == 0)
+                {
                     return Partial("_AddEditRequest", flowrequests);
+                }
 
                 flowrequests = await _service.GetSingleFlowRequest(id);
                 flowrequests.EnumerableWorkFlows = flows;
@@ -65,7 +66,9 @@ namespace WFlow.Web.UI.Pages
             try
             {
                 if (!ModelState.IsValid)
+                {
                     return RedirectToPage();
+                }
 
                 int i = await _service.AddEditFlowRequest(flowRequest);
                 return RedirectToPage();

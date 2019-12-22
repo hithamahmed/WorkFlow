@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppWorkFlow.Data.Entity;
-using WFlow.Core.Interface;
+﻿using AppWorkFlow.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WFlow.Core.Interface;
 
 namespace Flow.Web.UI.Pages
 {
@@ -33,16 +32,18 @@ namespace Flow.Web.UI.Pages
                 ModelState.AddModelError("", ex.Message);
                 throw;
             }
-          
+
         }
         public async Task<IActionResult> OnGetAddEditUserAsync(int userid)
         {
             try
             {
-                
+
                 User user = new User();
-                if(userid==0)
+                if (userid == 0)
+                {
                     return Partial("_AddEditUser", user);
+                }
 
                 user = await usersService.GetSingleUser(userid);
                 return Partial("_AddEditUser", user);
@@ -59,7 +60,9 @@ namespace Flow.Web.UI.Pages
             try
             {
                 if (!ModelState.IsValid)
+                {
                     return RedirectToPage();
+                }
 
                 int i = await usersService.AddEditUser(user);
                 return RedirectToPage();
@@ -69,14 +72,16 @@ namespace Flow.Web.UI.Pages
                 ModelState.AddModelError("", ex.Message);
                 return RedirectToPage();
             }
-           
+
         }
         public async Task<IActionResult> OnPostRemoveUserAsync(int userid)
         {
             try
             {
                 if (!ModelState.IsValid)
+                {
                     return RedirectToPage();
+                }
 
                 int i = await usersService.RemoveUser(userid);
                 return RedirectToPage();
@@ -112,7 +117,9 @@ namespace Flow.Web.UI.Pages
                 var users = await usersService.GetUsers();
                 department.UsersEnumerable = users;
                 if (id == 0)
+                {
                     return Partial("_AddEditDepartment", department);
+                }
 
                 department = await usersService.GetSingleDepartment(id);
                 department.UsersEnumerable = users;
@@ -130,7 +137,9 @@ namespace Flow.Web.UI.Pages
             try
             {
                 if (!ModelState.IsValid)
+                {
                     return RedirectToPage();
+                }
 
                 int i = await usersService.AddEditDepartment(department);
                 return RedirectToPage();

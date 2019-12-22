@@ -1,11 +1,10 @@
 ﻿using AppWorkFlow.Data;
 using AppWorkFlow.Data.Entity;
-using WFlow.Core.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using WFlow.Core.Interface;
 
 namespace WFlow.Core.Repositories
 {
@@ -22,9 +21,13 @@ namespace WFlow.Core.Repositories
             try
             {
                 if (department.Id == 0)
+                {
                     _db.Departments.Add(department);
+                }
                 else
+                {
                     _db.Update(department);
+                }
 
                 return await _db.SaveChangesAsync();
             }
@@ -40,11 +43,15 @@ namespace WFlow.Core.Repositories
             try
             {
                 if (user.Id == 0)
+                {
                     _db.Users.Add(user);
+                }
                 else
+                {
                     _db.Update(user);
+                }
 
-                return await _db.SaveChangesAsync(); 
+                return await _db.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -57,7 +64,7 @@ namespace WFlow.Core.Repositories
         {
             try
             {
-                return await _db.Departments.Include(x=>x.UserHead).ToListAsync();
+                return await _db.Departments.Include(x => x.UserHead).ToListAsync();
 
             }
             catch (Exception)
@@ -100,7 +107,7 @@ namespace WFlow.Core.Repositories
             try
             {
                 return await _db.Users.ToListAsync();
- 
+
             }
             catch (Exception)
             {
